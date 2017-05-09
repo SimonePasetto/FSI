@@ -23,11 +23,18 @@ actions_vectors = {"UP": (-1, 0),
                    "LEFT": (0, -1)
                    }
 
+invert = {0: "UP",
+          1: "RIGHT",
+          2: "DOWN",
+          3: "LEFT"}
+
+
 # Discount factor
 discount = 0.8
 
 Q = np.zeros((height * width, num_actions))  # Q matrix
 Rewards = np.zeros(height * width)  # Reward matrix, it is stored in one dimension
+
 
 def getState(y, x):
     return y * width + x
@@ -35,6 +42,7 @@ def getState(y, x):
 
 def getStateCoord(state):
     return int(state / width), int(state % width)
+
 
 def getActions(state):
     y, x = getStateCoord(state)
@@ -49,6 +57,7 @@ def getActions(state):
         actions.append("UP")
     return actions
 
+
 def getActionsNumber(state):
     y, x = getStateCoord(state)
     actions = []
@@ -62,19 +71,17 @@ def getActionsNumber(state):
         actions.append(0)
     return actions
 
+
 def movement(state, action):
     y = getStateCoord(state)[0] + actions_vectors[action][0]
     x = getStateCoord(state)[1] + actions_vectors[action][1]
     new_state = getState(y, x)
     return new_state
 
+
 def getRndAction(state):
     return random.choice(getActions(state))
 
-invert = {0: "UP",
-          1: "RIGHT",
-          2: "DOWN",
-          3: "LEFT"}
 
 def bestMove(state):
     possibleActions = getActionsNumber(state)
@@ -82,16 +89,19 @@ def bestMove(state):
     action = invert[action]
     return action
 
+
 def greedy(state):
     action = bestMove(state)
     new_state = movement(state, action)
     return new_state
+
 
 def explore(state):
     action = getRndAction(state)
     new_state = movement(state, action)
     qlearning(state, actions_list[action], new_state)
     return new_state
+
 
 def getRndState():
     return random.randint(0, height * width - 1)

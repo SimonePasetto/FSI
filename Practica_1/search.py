@@ -120,12 +120,13 @@ def depth_first_tree_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return tree_search(problem, Stack())
 
-def ramificacion_y_acotacion(problem):
 
+def ramificacion_y_acotacion(problem):
     def f(node):
         return node.path_cost
 
-    return tree_search(problem,PriorityQueue(min, f))
+    return tree_search(problem, PriorityQueue(min, f))  # Utilizo el path_cost para ordenar la PriorityQueue
+
 
 def graph_search(problem, fringe):
     """Search through the successors of a problem to find a goal.
@@ -195,11 +196,10 @@ def iterative_deepening_search(problem):
 
 
 def ramificacion_y_acotacion_con_subestimacion(problem):
-
     def f(node):
         return node.path_cost + problem.h(node)
 
-    return tree_search(problem,PriorityQueue(min, f))
+    return tree_search(problem,PriorityQueue(min, f)) # Utilizo el path_cost + h para ordenar
 
 
 def best_first_graph_search(problem, f):

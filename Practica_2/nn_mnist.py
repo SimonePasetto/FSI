@@ -37,11 +37,6 @@ train_y = one_hot(train_y, 10)
 valid_y = one_hot(valid_y, 10)
 test_y = one_hot(test_y, 10)
 
-# ---------------- Visualizing some element of the MNIST dataset --------------
-
-import matplotlib.cm as cm
-import matplotlib.pyplot as plt
-
 x = tf.placeholder("float", [None, 784]) # 28x28
 y_ = tf.placeholder("float", [None, 10]) # from 0 to 9
 
@@ -88,9 +83,9 @@ for b,r in zip(test_y, result):
     r = np.argmax(r)
 
     if b != r:
-        print b, "----->",r, "   Errore trovato"
+        print b, "----->",r, "   Error"
         errors += 1
     else:
         print b, "----->",r,"   OK"
 
-print "\nErrori totali: " , errors, "/", len(test_y), "Accuracy: "
+print "\nTotal errors: " , errors, "/", len(test_y), "Accuracy:", (len(test_y)-errors)*100.0/len(test_y), "%"

@@ -3,6 +3,8 @@ import numpy as np
 
 # Translate a list of labels into an array of 0's and one 1.
 # i.e.: 4 -> [0,0,0,0,1,0,0,0,0,0]
+
+
 def one_hot(x, n):
     """
     :param x: label (int)
@@ -64,7 +66,7 @@ print "----------------------"
 
 batch_size = 20
 
-for epoch in xrange(200):
+for epoch in xrange(100):
     for jj in xrange(len(x_data) / batch_size):
         batch_xs = x_data[jj * batch_size: jj * batch_size + batch_size]
         batch_ys = y_data[jj * batch_size: jj * batch_size + batch_size]
@@ -76,16 +78,21 @@ for epoch in xrange(200):
         print b, "-->", r
     print "----------------------------------------------------------------------------------"
 
-result = sess.run(y, feed_dict= {x:x_data_test})
+
+print "----------------------"
+print "   Start testing...  "
+print "----------------------"
+
+result = sess.run(y, feed_dict={x: x_data_test})
 errors = 0
-for b,r in zip(y_data_test, result):
+for b, r in zip(y_data_test, result):
     b = np.argmax(b)
     r = np.argmax(r)
 
     if b != r:
-        print b, "----->",r, "   Errore trovato"
+        print b, "----->", r, "   Error"
         errors += 1
     else:
-        print b, "----->",r,"   OK"
+        print b, "----->", r, "   OK"
 
-print "\nErrori totali: " , errors, "/", len(y_data_test), "Accuracy: "
+print "\nTotal errors: " , errors, "/", len(y_data_test), "Accuracy:", (len(y_data_test)-errors)*100.0/len(y_data_test), "%"
