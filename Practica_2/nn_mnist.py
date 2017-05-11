@@ -4,10 +4,10 @@ import cPickle
 import tensorflow as tf
 import numpy as np
 
-
 # Translate a list of labels into an array of 0's and one 1.
 # i.e.: 4 -> [0,0,0,0,1,0,0,0,0,0]
 from samba.dcerpc.base import transfer_syntax_ndr
+
 
 
 def one_hot(x, n):
@@ -63,18 +63,27 @@ print "   Start training...  "
 print "----------------------"
 
 batch_size = 20
+old_error = 10000
+epoch = 0
 
-for epoch in xrange(100):
+#for epoch in xrange(100):
+while True:
+    epoch+=1
     for jj in xrange(len(train_x) / batch_size):
         batch_xs = train_x[jj * batch_size: jj * batch_size + batch_size]
         batch_ys = train_y[jj * batch_size: jj * batch_size + batch_size]
         sess.run(train, feed_dict={x: batch_xs, y_: batch_ys})
 
-    print "Epoch #:", epoch, "Error: ", sess.run(loss, feed_dict={x: valid_x, y_: valid_y})
+    errore = sess.run(loss, feed_dict={x: valid_x, y_: valid_y})
+    print "Epoch #:", epoch, "Error: ", errore, "NewErr - OldErr: ", old_error-errore
     result = sess.run(y, feed_dict={x: batch_xs})
-    for b, r in zip(batch_ys, result):
-        print b, "-->", r
-    print "----------------------------------------------------------------------------------"
+    if old_error - errore < 0.1:
+        break
+    old_error = errore;
+
+    #for b, r in zip(batch_ys, result):
+    #    print b, "-->", r
+    #print "----------------------------------------------------------------------------------"
 
 result = sess.run(y, feed_dict= {x:test_x})
 errors = 0

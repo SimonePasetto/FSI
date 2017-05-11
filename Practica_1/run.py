@@ -3,7 +3,7 @@
 import search
 import sys
 
-ab = search.GPSProblem('A', 'B', search.romania)
+ab = search.GPSProblem('C', 'N', search.romania)
 
 
 sys.stdout.write("Ramificacion y acotacion -- Nodos expandido: ")

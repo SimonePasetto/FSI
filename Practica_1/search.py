@@ -106,7 +106,7 @@ def tree_search(problem, fringe):
             print expanded_nodes
             return node
         nodes = node.expand(problem)
-        expanded_nodes += len(nodes)
+        expanded_nodes += 1
         fringe.extend(nodes)
     return None
 

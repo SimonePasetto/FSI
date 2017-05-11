@@ -74,9 +74,9 @@ for epoch in xrange(100):
 
     print "Epoch #:", epoch, "Error: ", sess.run(loss, feed_dict={x: x_data_validacion, y_: y_data_validacion})
     result = sess.run(y, feed_dict={x: batch_xs})
-    for b, r in zip(batch_ys, result):
-        print b, "-->", r
-    print "----------------------------------------------------------------------------------"
+    #for b, r in zip(batch_ys, result):
+    #    print b, "-->", r
+    #print "----------------------------------------------------------------------------------"
 
 
 print "----------------------"
